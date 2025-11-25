@@ -1,6 +1,7 @@
-pandas
 streamlit
+pandas
+openpyxl
 sentence-transformers
 scikit-learn
-openpyxl
 numpy
+torch
