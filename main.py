@@ -80,11 +80,12 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    process_button = st.button("🚀 Process Data", type="primary", use_container_width=True)
+    # process_button = st.button("🚀 Process Data", type="primary", width="stretch")
+    process_button = st.button("🚀 Process Data", type="primary", width="stretch")
     
     # Reset button
     if st.session_state.processed:
-        if st.button("🔄 Reset", use_container_width=True):
+        if st.button("🔄 Reset", width="stretch"):
             st.session_state.processed = False
             st.session_state.final_results = None
             st.session_state.mapping_done = False
@@ -120,7 +121,7 @@ if dataset_file:
                 normalized_df['full_name_normalize'] = normalized_df['full_name'].apply(normalize_name)
                 st.success(f"✅ Normalisasi selesai: {len(normalized_df)} rows")
                 with st.expander("Preview Normalized Data"):
-                    st.dataframe(normalized_df.sample(min(5, len(normalized_df))), use_container_width=True)
+                    st.dataframe(normalized_df.sample(min(5, len(normalized_df))), width="stretch")
                 
                 # Step 2: Proses Master Generic
                 st.subheader("🔍 Step 2: Ekstrak Item")
@@ -129,7 +130,7 @@ if dataset_file:
                 generic_list = master_generic['item_before_dosage'].str.upper().tolist()
                 st.success(f"✅ Generic list created: {len(generic_list)} items")
                 with st.expander("Preview Generic List"):
-                    st.dataframe(master_generic.head(10), use_container_width=True)
+                    st.dataframe(master_generic.head(10), width="stretch")
                 
                 # Step 3: Filter Generic
                 st.subheader("🎯 Step 3: Filter Generic Items")
@@ -196,8 +197,8 @@ if dataset_file:
 
         # Display data
         # sample_100 = final_results.sample(n=100, random_state=42)
-        # st.dataframe(sample_100, use_container_width=True, height=400)
-        st.dataframe(final_results, use_container_width=True, height=400)
+        # st.dataframe(sample_100, width="stretch", height=400)
+        st.dataframe(final_results, width="stretch", height=400)
         
         # Download buttons untuk Generic Detection
         st.subheader("📥 Download Generic Detection Results")
@@ -215,7 +216,7 @@ if dataset_file:
                 data=buffer,
                 file_name="generic_detection_results.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True
+                width="stretch"
             )
         
         with col_dl2:
@@ -226,7 +227,7 @@ if dataset_file:
                 data=csv,
                 file_name="generic_detection_results.csv",
                 mime="text/csv",
-                use_container_width=True
+                width="stretch"
             )
         
         # ========== MAPPING SECTION ==========
@@ -234,7 +235,7 @@ if dataset_file:
         st.header("🔗 Step 8: Mapping to Master Data")
         st.info("💡 Gunakan BioBERT untuk mapping item ke Master Data dengan cosine similarity")
         
-        mapping_button = st.button("🚀 Start Mapping", type="primary", use_container_width=False)
+        mapping_button = st.button("🚀 Start Mapping", type="primary", width="content")
 
         if mapping_button and not st.session_state.mapping_done:
             # Create progress bar
@@ -392,9 +393,9 @@ if dataset_file:
             st.info(f"Showing {len(filtered_mapped)} items with similarity ≥ {min_similarity}")
             
             # Display mapped data
-            st.dataframe(filtered_mapped, use_container_width=True, height=400)
+            st.dataframe(filtered_mapped, width="stretch", height=400)
             # sample_100 = filtered_mapped.sample(n=100, random_state=42)
-            # st.dataframe(sample_100, use_container_width=True, height=400)
+            # st.dataframe(sample_100, width="stretch", height=400)
             
             # Download buttons untuk Mapping Results
             st.subheader("📥 Download Mapping Results")
@@ -412,7 +413,7 @@ if dataset_file:
                     data=buffer_map,
                     file_name="mapping_results.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    use_container_width=True
+                    width="stretch"
                 )
             
             with col_dl4:
@@ -423,7 +424,7 @@ if dataset_file:
                     data=csv_map,
                     file_name="mapping_results.csv",
                     mime="text/csv",
-                    use_container_width=True
+                    width="stretch"
                 )
 
 else:
